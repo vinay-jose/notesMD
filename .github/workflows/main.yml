@@ -3,7 +3,7 @@ name: Deploy to HF Spaces
 on:
   push:
     branches:
-      - 'hf-deploy'
+      - 'main'
 
 jobs:
   deploy:
@@ -20,5 +20,5 @@ jobs:
         run: |
           git config --global user.email "actions@github.com"
           git config --global user.name "GitHub Actions"
-          git push --force https://HuggingFaceBot:$HF_TOKEN@huggingface.co/spaces/vinay-jose/notesMD hf-deploy:main
+          git push --force https://HuggingFaceBot:$HF_TOKEN@huggingface.co/spaces/vinay-jose/notesMD main:main
           
