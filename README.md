@@ -1,5 +1,5 @@
 ---
-title: Books
+title: NotesMD
 emoji: 🐠
 colorFrom: gray
 colorTo: green
