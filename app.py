@@ -16,21 +16,23 @@ def load_book(file_path):
 def create_mode_picker():
     def _opt(val, txt, **kwargs): return Option(txt, value=val, **kwargs)
     def _optgrp(key, lbl, opts): return Optgroup(data_key=key, label=lbl)(*opts)
-    group = _optgrp('mode', 'Mode', 
+    group = _optgrp('mode', '', 
                     [
-                        _opt('light','Light',data_icon='sun'), 
-                        _opt('dark','Dark',data_icon='moon')
+                        _opt('light','',data_icon='sun'), 
+                        _opt('dark','',data_icon='moon')
                     ])
     return Div(Uk_theme_switcher(
                     Select(group, hidden=True, selected=True),  
                     id="mode-picker"
                 ), 
-               cls=stringify('p-4'))
+               cls="fixed top-4 right-4 z-50 p-2",
+                # style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;"
+            )
 
 def create_book_page(post):
     """Create the detailed book page using our template"""
     metadata = post.metadata
-    return Container(
+    return Title(metadata["title"]), Container(
         random_theme_script(),
         DivCentered(
             Card(
@@ -132,7 +134,7 @@ def index():
         post = load_book(file)
         book_cards.append(create_book_card(post.metadata, file.stem))
     
-    return Container(
+    return Title("NotesMD"), Container(
         create_mode_picker(),
         random_theme_script(),
         Grid(*book_cards, 
@@ -154,7 +156,7 @@ def get(filename: str):
         post = load_book(book_file)
         return create_book_page(post)
     except (FileNotFoundError, ValueError) as e:
-        return Container(
+        return Title("Not Found!"), Container(
             DivCentered(
                 H1("Book Not Found", cls=TextT.error),
                 P("Sorry, we couldn't find the book you're looking for."),
